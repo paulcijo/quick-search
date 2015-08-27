@@ -1,0 +1,208 @@
+<html>
+<head>
+<style>
+	html, body {
+		height: 100%;
+		margin: 0;
+	}
+	body {
+		font-size: 22px;
+		font-weight: bold;
+	}
+	#qbar {
+		width: 70%;
+		padding: 15px; 
+		margin-top: 50px;
+		margin-bottom: 0px;
+		border: none;
+		border-radius: 10px;
+		color: gainsboro;
+		background-color: black;
+		font-size: 24px;
+	}
+	
+	#wrapper {
+		background-color: #348FD4;
+		font-family: arial;
+		padding: 80px;
+		margin: 0;
+	}
+	
+	#wrapper a {
+		color: white;
+		text-decoration: none;
+		text-decoration: underline;
+	}
+	
+	#wrapper #heading {
+		//color: #06406C;
+		color:azure;
+		font-family: arial;
+		font-size: 70px;
+		margin-bottom: 0px;
+	}
+	
+	#wrapper2 {
+		background-color: white;
+		font-family: arial;
+		padding: 80px;
+		margin: 0;
+	}
+	
+	#wrapper2 #heading {
+		font-family: arial;
+		font-size: 70px;
+		margin-bottom: 50px;
+		color: lightcoral;
+	}
+	
+	#wrapper2 #subheading {
+		font-family: Monaco;
+		font-size: 36px;
+		font-weight: bolder;
+		margin-bottom: 10px;
+	}
+	
+	#error {
+		color: white;
+		margin-bottom: 100px;
+	}
+	
+	#credits {
+		color: aliceblue;
+	}
+	
+	#wrapper .code {
+		background: white;
+		padding: 5px;
+		border-radius: 10px;
+		color: lightseagreen;
+		margin-right: 5px;
+		margin-left: 5px;
+		padding-right: 10px;
+		padding-left: 10px;
+	}
+	
+	#wrapper2 .code {
+		background: ghostwhite;
+		padding: 5px;
+		border-radius: 10px;
+		color: lightseagreen;
+		margin-right: 5px;
+		margin-left: 5px;
+		padding-right: 10px;
+		padding-left: 10px;
+		font-weight: lighter;
+		font-size: 36px;
+	}
+	
+	#wrapper2 .code.color-green {
+		color: deepskyblue;
+	}
+</style>
+
+<script>
+	search_dict = {
+		"g" : 'http://www.google.com/search?q=',
+		"i" : 'http://www.imdb.com/find?q=',
+		"w" : 'https://en.wikipedia.org/w/index.php?search=',
+		"t" : 'https://torrentz.eu/search?q=',
+		"y" : 'https://www.youtube.com/results?search_query=',
+		"k" : 'https://kickass.to/usearch/',
+		"b" : 'https://www.bing.com/search?q=',
+		"a" : 'http://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=',
+		"f" : 'http://www.flipkart.com/search?q=',
+	};
+	
+	function post_error(se) {
+		var x = document.getElementById("error");
+		x.innerHTML = "Sorry, <font class = 'code'>" + se + "</font> not present see <a href = '#wrapper2'>#HowToUse</a>";
+	}
+	
+	function process(q) {
+		if (q.indexOf(":") == 1) {
+			// search engine handle exists
+			var se = q.substring(0,1); // retrieving se handle
+			if(!(se in search_dict)) {
+				post_error(se);
+				return;
+			}
+			q = q.substring(2);
+			q = q.trim();
+			q = search_dict[se] + q;
+		} else {
+			q = search_dict["g"] + q;
+		}
+		window.location.href = q;
+	}
+	
+	function searchKeyPress(e)
+    {
+        // look for window.event in case event isn't passed in
+        e = e || window.event;
+        if (e.keyCode == 13)
+        {
+        	var q = document.getElementById("qbar").value;
+			q = q.trim();
+			q = q.toLowerCase();
+            process(q);
+            return false;
+        }
+        return true;
+    }
+    
+</script>
+</head>
+
+<body>
+	
+	<div id = "wrapper">
+		<center>
+			<p id = "heading">DropSearch</p>
+			<small id = "credits">&copy; Cijo Paul</small><br/>
+			<input id = 'qbar' name = 'q' type = 'text' onkeypress = "return searchKeyPress(event);" placeholder = 'e: query' autofocus><br/>
+			<p id = "error">type <font class = "code">search term</font> and hit ENTER to Google</search></p>
+		</center>
+	</div>
+	
+	<div id = "wrapper2">
+		<center>
+			<div id = "heading">#HowToUse</div>
+			<table style="width:100%">
+				<tr>
+					<td><div id = "subheading">Search Youtube</div></td>
+					<td><p><span class = "code color-green">y</span><font size="20"><b>:</b></font><span class = "code">search term</span></p></td>
+				</tr>
+				<tr>
+					<td><div id = "subheading">Search Imdb</div></td>
+					<td><p><span class = "code color-green">i</span><font size="20"><b>:</b></font><span class = "code">search term</span></p></td>
+				</tr>
+				<tr>
+					<td><div id = "subheading">Search Torrentz.eu</div></td>
+					<td><p><span class = "code color-green">t</span><font size="20"><b>:</b></font><span class = "code">search term</span></p></td>
+				</tr>
+				<tr>
+					<td><div id = "subheading">Search Kickass.to</div></td>
+					<td><p><span class = "code color-green">k</span><font size="20"><b>:</b></font><span class = "code">search term</span></p></td>
+				</tr>
+				<tr>
+					<td><div id = "subheading">Search Wikipedia</div></td>
+					<td><p><span class = "code color-green">w</span><font size="20"><b>:</b></font><span class = "code">search term</span></p></td>
+				</tr>
+				<tr>
+					<td><div id = "subheading">Search Bing</div></td>
+					<td><p><span class = "code color-green">b</span><font size="20"><b>:</b></font><span class = "code">search term</span></p></td>
+				</tr>
+				<tr>
+					<td><div id = "subheading">Search Amazon</div></td>
+					<td><p><span class = "code color-green">a</span><font size="20"><b>:</b></font><span class = "code">search term</span></p></td>
+				</tr>
+				<tr>
+					<td><div id = "subheading">Search Flipkart</div></td>
+					<td><p><span class = "code color-green">f</span><font size="20"><b>:</b></font><span class = "code">search term</span></p></td>
+				</tr>
+			</table>
+		</center>
+	</div>
+</body>
+</html>
